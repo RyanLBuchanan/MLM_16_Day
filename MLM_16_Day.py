@@ -1,3 +1,3 @@
 # Python version
 import sys
-print()
+print('Python: {}'.format(sys.version))
