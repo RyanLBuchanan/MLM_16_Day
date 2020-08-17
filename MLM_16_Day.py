@@ -26,3 +26,18 @@ col_names = ['one', 'two', 'three']
 my_dataframe = pd.DataFrame(my_array, index = row_names, columns = col_names)
 print(my_dataframe)
 
+# Lesson 3
+# Load CSV using Pandas from URL
+from pandas import read_csv
+url = 'https://goo.gl/bDdBiA'
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+data = read_csv(url, names = names)
+print(data.shape)
+
+
+# Lesson 4
+# Statistical Summary
+description = data.describe()
+print(description)
+
+# Lesson 5
