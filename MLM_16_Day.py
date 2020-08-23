@@ -107,3 +107,49 @@ model = LogisticRegression(solver='liblinear')
 scoring = 'neg_log_loss'
 results = cross_val_score(model, X, Y, cv=kfold, scoring=scoring)
 print("LogLoss: %.3f (%.3f)" % (results.mean(), results.std()))
+
+# Lesson 9: Spot-Check Algorithms
+# KNN Regression
+from pandas import read_csv
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+from sklearn.neighbors import KNeighborsRegressor
+url = 'https://goo.gl/FmJUSM'
+names = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV']
+dataframe = read_csv(url, delim_whitespace=True, names=names)
+array = dataframe.values
+X = array[:, 0:13]
+Y = array[:, 13]
+kfold = KFold(n_splits=10, random_state=7)
+model = KNeighborsRegressor()
+scoring = 'neg_mean_squared_error'
+results = cross_val_score(model, X, Y, cv=kfold, scoring=scoring)
+print(results.mean())
+
+# Lesson 10: Model Comparison and Selection
+# Compare Algorithms
+from pandas import read_csv
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+# Load dataset
+url = 'http://goo.gl/bDdBiA'
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = read_csv(url, names=names)
+X = array[:, 0:8]
+Y = array[:, 8]
+# Prepare models
+models = []
+models.append(('LR', LogisticRegression(solver='liblinear')))
+models.append(('LDA', LinearDiscriminantAnalysis()))
+# Evaluate each model in turn
+results = []
+names = []
+scoring = 'accuracy'
+for name, model in models:
+    kfold = KFold(n_splits=10, random_state=7)
+    cv_results = cross_val_score(model, X, Y, cv=kfold, scoring=scoring)
+    results.append(cv_results)
+    names.append(name)
+print('%s: %f (%f)' % (name, cv_results.mean(), cv_results.std()))
