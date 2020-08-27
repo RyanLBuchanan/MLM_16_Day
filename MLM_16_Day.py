@@ -163,11 +163,14 @@ from sklearn.model_selection import GridSearchCV
 url = "https://goo.gl/bDdBiA"
 names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
 dataframe = read_csv(url, names=names)
+print(dataframe)
 array = dataframe.values
+print(array)
 X = array[:, 0:8]
 Y = array[:,8]
 alphas = np.array([1,0.1,0.01,0.001,0.0001,0])
 param_grid = dict(alpha=alphas)
+print(param_grid)
 model = Ridge()
 grid = GridSearchCV(estimator=model, param_grid=param_grid, cv=3)
 grid.fit(X, Y)
