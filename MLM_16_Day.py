@@ -153,3 +153,23 @@ for name, model in models:
     results.append(cv_results)
     names.append(name)
 print('%s: %f (%f)' % (name, cv_results.mean(), cv_results.std()))
+
+# Lesson #11: Improve Accuracy with Algorithm Tuning
+# Grid search for Algorithm Tuning
+from pandas import read_csv
+import numpy as np
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import GridSearchCV
+url = "https://goo.gl/bDdBiA"
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = read_csv(url, names=names)
+array = dataframe.values
+X = array[:, 0:8]
+Y = array[:,8]
+alphas = np.array([1,0.1,0.01,0.001,0.0001,0])
+param_grid = dict(alpha=alphas)
+model = Ridge()
+grid = GridSearchCV(estimator=model, param_grid=param_grid, cv=3)
+grid.fit(X, Y)
+print(grid.best_score_)
+print(grid.best_estimator_.alpha)
