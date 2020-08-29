@@ -176,3 +176,22 @@ grid = GridSearchCV(estimator=model, param_grid=param_grid, cv=3)
 grid.fit(X, Y)
 print(grid.best_score_)
 print(grid.best_estimator_.alpha)
+
+# Lesson 12: Improve Accuracy with Ensemble Predictions
+# Random Forest Classification
+from pandas import read_csv
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+from sklearn.ensemble import RandomForestClassifier
+url = "https://goo.gl/bDdBiA"
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = read_csv(url, names=names)
+array = dataframe.values
+X = array[:,0:8]
+Y = array[:,8]
+num_trees = 100
+max_features = 3
+kfold = KFold(n_splits=10, random_state=7)
+model = RandomForestClassifier(n_estimators=num_trees, max_features=max_features)
+results = cross_val_score(model, X, Y, cv=kfold)
+print(results.mean())
